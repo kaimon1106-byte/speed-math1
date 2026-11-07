@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPEED MATH GENERATOR 2026 — Sarasas Math Genius</title>
+<style>
+:root{
+  --navy-9:#050d24;--navy-8:#081538;--navy-7:#0c1f52;--navy-6:#123070;
+  --gold:#f5c542;--gold-2:#ffe08a;--gold-d:#b8891a;
+  --muted:#9fb0d8;--line:rgba(245,197,66,.30);
+  --easy:#34d399;--med:#4aa8ff;--hard:#ff5c6c;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:"Leelawadee UI","Sarabun","Noto Sans Thai",Tahoma,"Segoe UI",system-ui,sans-serif;
+  background:radial-gradient(1200px 600px at 15% -10%,#1a3f94 0,transparent 60%),linear-gradient(160deg,var(--navy-8),var(--navy-9));
+  background-attachment:fixed;color:#fff;min-height:100vh;
+}
+button,input,select{font:inherit}
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:14px 26px;border-bottom:2px solid var(--gold);
+  background:linear-gradient(180deg,rgba(18,48,112,.85),rgba(8,21,56,.85));position:sticky;top:0;z-index:50;backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:28px;font-weight:900;color:#0b1d4d;
+  background:linear-gradient(160deg,var(--gold-2),var(--gold));box-shadow:0 0 18px rgba(245,197,66,.5)}
+.brand-sub{font-size:.72rem;letter-spacing:.32em;color:var(--gold);font-weight:700}
+.brand h1{margin:0;font-size:1.35rem;letter-spacing:.06em}
+.brand h1 b{color:var(--gold)}
+.tabs{display:flex;gap:6px;margin-left:auto}
+.tabs button{background:transparent;border:1px solid transparent;color:var(--muted);padding:.6em 1.1em;border-radius:12px;cursor:pointer;font-weight:700}
+.tabs button.active{background:rgba(245,197,66,.14);border-color:var(--gold);color:var(--gold-2)}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+main{padding:22px 26px 60px;max-width:1500px;margin:0 auto}
+.tab{display:none}.tab.active{display:block}
+.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px}
+@media(max-width:1100px){.grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,rgba(18,48,112,.55),rgba(8,21,56,.7));border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:20px;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.card h2{margin:0 0 12px;font-size:1rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
+.hint{color:var(--muted);font-size:.85rem}
+/* ---------- buttons ---------- */
+.btn{font-weight:700;border:1px solid var(--line);background:rgba(255,255,255,.07);color:#fff;padding:.65em 1.1em;border-radius:12px;cursor:pointer;transition:.15s;letter-spacing:.02em}
+.btn:hover:not(:disabled){background:rgba(255,255,255,.16);transform:translateY(-1px)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn.gold{background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#0b1d4d;border-color:var(--gold-d)}
+.btn.gold:hover:not(:disabled){background:linear-gradient(180deg,#fff0b8,var(--gold-2))}
+.btn.go{background:linear-gradient(180deg,#4ade80,#16a34a);border-color:#15803d;color:#032312}
+.btn.warn{background:linear-gradient(180deg,#fdba74,#f97316);border-color:#c2410c;color:#2a1000}
+.btn.danger{background:rgba(255,92,108,.15);border-color:var(--hard);color:#ffc2c8}
+.btn.big{font-size:1.15rem;padding:.8em 1.5em}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+/* ---------- question card ---------- */
+.q-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.q-no{font-size:2.6rem;font-weight:900;color:var(--gold);line-height:1}
+.q-no small{font-size:1.2rem;color:var(--muted);font-weight:700}
+.badge{display:inline-block;padding:.35em .9em;border-radius:999px;font-weight:800;letter-spacing:.08em;font-size:.85rem;border:2px solid var(--c,var(--gold));color:var(--c,var(--gold))}
+.badge.pts{--c:#fff}
+.q-spacer{flex:1}
+.q-nums{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:18px 0 8px}
+.tile{width:clamp(70px,9vw,124px);aspect-ratio:1;display:grid;place-items:center;font-size:clamp(42px,5.8vw,80px);font-weight:900;color:#0b1d4d;
+  background:linear-gradient(160deg,#fff,#dfe7ff);border:4px solid var(--gold);border-radius:20px;box-shadow:0 0 22px rgba(245,197,66,.3)}
+.q-target{text-align:center;margin:6px 0}
+.q-target span{display:block;letter-spacing:.45em;color:var(--gold-2);font-weight:700;font-size:.9rem}
+.q-target b{font-size:clamp(64px,9vw,120px);color:var(--gold);line-height:1;text-shadow:0 0 28px rgba(245,197,66,.45)}
+.q-timer{text-align:center;margin-top:6px;padding:10px;border-radius:16px;border:2px solid var(--line);background:rgba(0,0,0,.25)}
+.t-time{font-size:clamp(56px,7vw,96px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.t-state{letter-spacing:.35em;font-weight:800;color:var(--muted);font-size:.85rem}
+.q-timer.warn{border-color:var(--hard);animation:pulse 1s infinite}
+.q-timer.warn .t-time{color:var(--hard)}
+.q-timer.up{background:rgba(255,92,108,.25);border-color:var(--hard)}
+.q-timer.up .t-time,.q-timer.up .t-state{color:#ff8a96}
+@keyframes pulse{50%{box-shadow:0 0 22px rgba(255,92,108,.6)}}
+/* ---------- progress ---------- */
+.progress{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.seg{background:rgba(255,255,255,.06);border:1px solid var(--line);border-bottom:5px solid var(--c);color:#fff;border-radius:10px;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.seg b{font-size:1.1rem}.seg small{font-size:.65rem;color:var(--muted);letter-spacing:.05em}
+.seg.cur{background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#0b1d4d}
+.seg.cur small{color:#0b1d4d}
+.seg.done::after{content:"✓";font-size:.7rem;color:var(--easy)}
+.seg.cur.done::after{color:#0b6b3a}
+.legend{display:flex;gap:16px;margin-top:10px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+/* ---------- answer / checker ---------- */
+.locked{padding:22px;text-align:center;border:2px dashed var(--line);border-radius:14px;color:var(--muted)}
+.ans-main{background:rgba(245,197,66,.12);border:1px solid var(--gold);border-radius:14px;padding:14px;margin-bottom:12px}
+.ans-label{font-size:.8rem;letter-spacing:.1em;color:var(--gold);font-weight:700;margin-bottom:6px}
+.ans-big{font-size:1.7rem;font-weight:900;word-break:break-word}
+.ans-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ans-list li{display:flex;justify-content:space-between;gap:10px;background:rgba(255,255,255,.06);padding:8px 12px;border-radius:10px;font-size:1.05rem}
+.ans-list li span{color:var(--easy);font-weight:700;white-space:nowrap}
+.ans-list li.bad span{color:var(--hard)}
+.ans-list code{font-family:inherit;font-weight:700}
+.chk-row{display:flex;gap:8px}
+input[type=text]{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);color:#fff;padding:.65em .9em;border-radius:10px;outline:none}
+input[type=text]:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(245,197,66,.25)}
+.sym{display:flex;gap:6px;margin:8px 0}
+.sym button{flex:1;background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--gold-2);border-radius:8px;padding:.4em;cursor:pointer;font-weight:800;font-size:1.05rem}
+.chk-out{margin-top:10px;padding:10px 12px;border-radius:10px;font-weight:700;display:none}
+.chk-out.ok{display:block;background:rgba(52,211,153,.15);border:1px solid var(--easy);color:#a7f3d0}
+.chk-out.no{display:block;background:rgba(255,92,108,.15);border:1px solid var(--hard);color:#ffc2c8}
+.set-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:.95rem;cursor:pointer}
+.set-row input{width:18px;height:18px;accent-color:var(--gold)}
+ul.rules{margin:0;padding-left:1.2em;color:#dbe4ff;font-size:.92rem;line-height:1.7}
+kbd{background:rgba(255,255,255,.15);border:1px solid var(--line);border-radius:6px;padding:0 .45em;font-size:.85em}
+/* ---------- scores ---------- */
+.form-row{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:10px;align-items:center}
+@media(max-width:900px){.form-row{grid-template-columns:1fr}}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:8px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);white-space:nowrap}
+th{color:var(--gold);font-size:.8rem;letter-spacing:.08em}
+th.q{border-bottom:3px solid var(--c)}
+td.l,th.l{text-align:left}
+td.l{white-space:normal;min-width:160px}
+.mem{font-size:.8rem;color:var(--muted)}
+td.rk{font-size:1.3rem;font-weight:900;color:var(--gold)}
+td.tot{font-size:1.3rem;font-weight:900;color:var(--gold-2)}
+td.q.ok{color:var(--easy);font-weight:800}td.q.no{color:var(--hard);font-weight:700}td.q.pend{color:var(--gold)}td.q.none{color:rgba(255,255,255,.25)}
+td.q sup{color:var(--gold);font-weight:800;margin-left:2px}
+tr.r1{background:rgba(245,197,66,.16)}tr.r2{background:rgba(220,226,240,.10)}tr.r3{background:rgba(205,127,50,.12)}
+.mini{background:rgba(255,255,255,.08);border:1px solid var(--line);color:#fff;border-radius:8px;padding:.3em .7em;cursor:pointer;margin:0 2px;font-size:.85rem}
+.mini.dn{border-color:var(--hard);color:#ffc2c8}
+.quick{display:grid;gap:10px}
+.qrow{display:grid;grid-template-columns:1.2fr auto auto auto;gap:12px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 14px}
+@media(max-width:900px){.qrow{grid-template-columns:1fr 1fr}}
+.qrow .nm{font-weight:800}
+.bon{display:flex;align-items:center;gap:6px;font-weight:800;color:var(--gold-2);cursor:pointer}
+.bon input{width:20px;height:20px;accent-color:var(--gold)}
+.bon.lock{opacity:.5;cursor:not-allowed}
+.rbtn{border:1px solid var(--line);background:rgba(255,255,255,.07);color:#fff;border-radius:10px;padding:.5em .9em;cursor:pointer;font-weight:700;margin-right:4px}
+.rbtn.ok.on{background:var(--easy);color:#032312;border-color:var(--easy)}
+.rbtn.no.on{background:var(--hard);color:#2b0007;border-color:var(--hard)}
+.pv{font-weight:900;font-size:1.2rem;color:var(--gold-2);min-width:70px;text-align:right}
+.empty{padding:26px;text-align:center;color:var(--muted)}
+.print-only{display:none}
+/* ---------- dialogs / toast ---------- */
+dialog{background:var(--navy-7);color:#fff;border:2px solid var(--gold);border-radius:18px;padding:22px;max-width:min(94vw,760px);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(2,6,20,.72)}
+dialog p{white-space:pre-line;font-size:1.1rem;margin:0 0 18px}
+dialog .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.edit-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.edit-q{display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:center;margin-top:8px}
+select{background:rgba(0,0,0,.35);border:1px solid var(--line);color:#fff;border-radius:8px;padding:.45em .6em}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(30px);background:var(--gold);color:#0b1d4d;font-weight:800;padding:.8em 1.4em;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:3000;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ---------- projector view ---------- */
+.proj{display:none;position:fixed;inset:0;z-index:2000;flex-direction:column;overflow:hidden;color:#fff;
+  background:radial-gradient(ellipse at 50% -10%,#2150c4 0,#0d2160 45%,#040b21 100%)}
+body.view-projector .proj,body.proj-overlay .proj{display:flex}
+body.view-projector #app{display:none}
+body.view-projector,body.proj-overlay{overflow:hidden}
+.proj::before{content:"";position:absolute;inset:1.4vh;border:.45vh solid var(--gold);border-radius:2vh;pointer-events:none;opacity:.55}
+.proj-head{display:flex;justify-content:space-between;align-items:center;padding:3vh 4vw 0;font-size:2.3vh;letter-spacing:.38em;color:var(--gold);font-weight:800}
+.proj-body{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;padding:0 3vw 3vh}
+.p-nums{display:flex;gap:2.4vw}
+.p-tile{width:min(21vw,27vh);height:min(21vw,27vh);display:grid;place-items:center;font-size:min(16vw,21vh);font-weight:900;color:#0b1d4d;
+  background:linear-gradient(160deg,#fff,#dbe5ff);border:.7vh solid var(--gold);border-radius:3vh;box-shadow:0 0 4vh rgba(245,197,66,.4),inset 0 -1.2vh 2vh rgba(11,29,77,.14)}
+.p-target{display:flex;flex-direction:column;align-items:center}
+.p-target-label{font-size:3.8vh;letter-spacing:.55em;color:var(--gold-2);font-weight:800;padding-left:.55em}
+.p-target-num{font-size:min(30vw,28vh);font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 5vh rgba(245,197,66,.55),0 .6vh 0 var(--gold-d)}
+.p-timer{min-width:min(60vw,70vh);text-align:center;padding:.6vh 3vw;border:.6vh solid var(--gold);border-radius:3vh;background:rgba(3,10,35,.6);
+  font-size:min(12vw,13vh);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.p-timer.warn{border-color:var(--hard);color:#ff8a96;animation:pulse 1s infinite}
+.p-timer.timeup{background:#c81e32;border-color:#fff;color:#fff;animation:flash .7s infinite}
+@keyframes flash{50%{background:#7a0e1b}}
+.p-wait{display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:4vh;color:var(--muted);text-align:center;background:inherit;z-index:2}
+.p-ctrl{position:absolute;right:2.5vw;bottom:2.5vh;display:flex;gap:10px;opacity:0;transition:.3s;z-index:5;align-items:center}
+body.mouse .p-ctrl{opacity:1}
+.p-ctrl button{background:rgba(255,255,255,.15);color:#fff;border:1px solid var(--gold);border-radius:10px;padding:.5em .9em;cursor:pointer;font-size:1rem}
+.p-close{display:none}
+body.proj-overlay .p-close{display:block}
+.p-sound{font-size:.9rem;color:var(--gold-2);display:none}
+body:not(.mouse) .proj{cursor:none}
+/* ---------- print ---------- */
+@page{size:A4 landscape;margin:10mm}
+@media print{
+  body{background:#fff!important;color:#000!important}
+  .top,.no-print,#tab-control,#projector,#toast{display:none!important}
+  #tab-scores{display:block!important}
+  main{padding:0}
+  .card{background:#fff!important;border:none!important;box-shadow:none!important;color:#000!important;padding:0!important}
+  th,td{color:#000!important;border:1px solid #888!important}
+  td.q.ok{color:#0a7a3a!important}td.q.no{color:#b00020!important}
+  tr.r1,tr.r2,tr.r3{background:#f1f1f1!important}
+  .mem{color:#333!important}
+  .print-only{display:block!important;margin-bottom:10px;color:#000}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== หน้าจอกรรมการ ===================== -->
+<div id="app">
+<header class="top">
+  <div class="brand">
+    <div class="logo">∑</div>
+    <div>
+      <div class="brand-sub">SARASAS MATH GENIUS 2026</div>
+      <h1>SPEED MATH <b>GENERATOR</b> 2026</h1>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button data-tab="control" class="active">🎛 ห้องควบคุม</button>
+    <button data-tab="scores">🏆 บันทึกคะแนน</button>
+  </nav>
+  <div class="top-actions">
+    <button id="btnOpenProj" class="btn gold">🖥 เปิดหน้าจอฉาย</button>
+    <button id="btnProjMode" class="btn">⛶ Projector Mode</button>
+  </div>
+</header>
+
+<main>
+<!-- ---------- ห้องควบคุม ---------- -->
+<section id="tab-control" class="tab active">
+<div class="grid">
+  <div>
+    <div class="card">
+      <div class="q-top">
+        <div class="q-no"><span id="qNo">01</span><small>/10</small></div>
+        <span id="qLevel" class="badge">EASY</span>
+        <span id="qPts" class="badge pts">5 คะแนน</span>
+        <span class="q-spacer"></span>
+        <span class="hint">⚠ Bonus ×2 ต้องแจ้งกรรมการก่อนกด START</span>
+      </div>
+      <div class="q-nums" id="qNums"></div>
+      <div class="q-target"><span>TARGET</span><b id="qTarget">--</b></div>
+      <div class="q-timer" id="tBox"><div class="t-time" id="tTime">00:45</div><div class="t-state" id="tState">READY</div></div>
+      <div class="btn-row">
+        <button class="btn go big" id="bStart">▶ START</button>
+        <button class="btn warn big" id="bPause">⏸ PAUSE</button>
+        <button class="btn gold big" id="bResume">⏯ RESUME</button>
+        <button class="btn danger big" id="bReset">⟲ RESET</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ความคืบหน้าการแข่งขัน</h2>
+      <div class="progress" id="progress"></div>
+      <div class="legend">
+        <span><i style="background:var(--easy)"></i>EASY ข้อ 1–3 • 5 คะแนน • 45 วินาที</span>
+        <span><i style="background:var(--med)"></i>MEDIUM ข้อ 4–7 • 10 คะแนน • 60 วินาที</span>
+        <span><i style="background:var(--hard)"></i>HARD ข้อ 8–10 • 15 คะแนน • 90 วินาที</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ควบคุมข้อสอบ</h2>
+      <div class="btn-row" style="margin-top:0;justify-content:flex-start">
+        <button class="btn" id="bPrev">◀ PREVIOUS QUESTION</button>
+        <button class="btn gold" id="bNext">NEXT QUESTION ▶</button>
+        <button class="btn" id="bNew">🎲 NEW QUESTION</button>
+        <button class="btn" id="bShow">👁 SHOW ANSWER</button>
+        <button class="btn" id="bHide">🙈 HIDE ANSWER</button>
+      </div>
+      <p class="hint" id="newHint" style="margin:10px 0 0">NEW QUESTION จะถูกล็อกระหว่างจับเวลา (RUNNING / PAUSED) เพื่อป้องกันการกดพลาด</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>🔐 เฉลย (เฉพาะกรรมการ)</h2>
+      <div id="ansBody"></div>
+    </div>
+
+    <div class="card">
+      <h2>✅ ตรวจคำตอบของทีม</h2>
+      <div class="hint" style="margin-bottom:8px">พิมพ์นิพจน์ที่ทีมตอบ เช่น (9 − 3) × 4 ÷ 2 ระบบจะตรวจว่าใช้เลขครบ 4 จำนวน ตัวละครั้ง และได้ค่า Target หรือไม่</div>
+      <div class="chk-row"><input type="text" id="chkIn" placeholder="ใส่นิพจน์ที่นี่" autocomplete="off"><button class="btn gold" id="chkBtn">ตรวจ</button></div>
+      <div class="sym" id="sym"><button>+</button><button>−</button><button>×</button><button>÷</button><button>(</button><button>)</button><button title="ลบทีละตัว">⌫</button></div>
+      <div class="chk-out" id="chkOut"></div>
+    </div>
+
+    <div class="card">
+      <h2>⚙ ตั้งค่า</h2>
+      <label class="set-row"><input type="checkbox" id="setMeta"> แสดงเลขข้อ/ระดับบนหน้าจอฉาย</label>
+      <label class="set-row"><input type="checkbox" id="setHide"> ซ่อนโจทย์บนหน้าจอฉายจนกว่าจะกด START</label>
+      <label class="set-row"><input type="checkbox" id="setSndA"> เล่นเสียงหมดเวลาที่หน้าจอกรรมการ</label>
+      <label class="set-row"><input type="checkbox" id="setSndP"> เล่นเสียงหมดเวลาที่หน้าจอฉาย (ต้องคลิกหน้าจอฉาย 1 ครั้งก่อน)</label>
+      <div class="btn-row" style="justify-content:flex-start">
+        <button class="btn" id="bTestSnd">🔔 ทดสอบเสียง</button>
+        <button class="btn danger" id="bNewSet">🎲 สุ่มชุดโจทย์ใหม่ทั้ง 10 ข้อ</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⌨ คีย์ลัด / กติกา</h2>
+      <ul class="rules">
+        <li><kbd>Space</kbd> เริ่ม / พัก / เล่นต่อ</li>
+        <li><kbd>←</kbd> <kbd>→</kbd> ข้อก่อนหน้า / ข้อถัดไป</li>
+        <li><kbd>A</kbd> แสดง/ซ่อนเฉลย</li>
+        <li>ใช้เลข 4 จำนวนครบ ตัวละ 1 ครั้ง ด้วย + − × ÷ และวงเล็บ</li>
+        <li>ห้ามต่อเลขหลายหลัก ยกกำลัง รากที่สอง หรือแฟกทอเรียล</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ---------- บันทึกคะแนน ---------- -->
+<section id="tab-scores" class="tab">
+  <div class="card no-print">
+    <h2>➕ เพิ่มทีม</h2>
+    <div class="form-row">
+      <input type="text" id="tName" placeholder="ชื่อทีม *" maxlength="60" autocomplete="off">
+      <input type="text" id="tM1" placeholder="สมาชิกคนที่ 1" maxlength="60" autocomplete="off">
+      <input type="text" id="tM2" placeholder="สมาชิกคนที่ 2" maxlength="60" autocomplete="off">
+      <button class="btn gold" id="btnAddTeam">เพิ่มทีม</button>
+    </div>
+  </div>
+
+  <div class="card no-print">
+    <h2>📝 บันทึกผลข้อปัจจุบัน — <span id="quickTitle"></span></h2>
+    <div class="hint" style="margin-bottom:10px">ติ๊ก Bonus ×2 ได้เฉพาะก่อนกด START (ตอบผิดหรือไม่ตอบ = 0 คะแนน และถือว่าใช้ Bonus แล้ว) • หากต้องแก้ย้อนหลังให้กดปุ่ม “แก้ไข” ในตารางอันดับ</div>
+    <div class="quick" id="quick"></div>
+  </div>
+
+  <div class="card printable">
+    <div class="print-only"><h2 style="font-size:20px;margin:0;color:#000">SPEED MATH GENERATOR 2026 — ผลการแข่งขัน</h2><div id="printDate"></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px" class="no-print">
+      <h2 style="margin:0">🏆 อันดับทีม</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="btnCsv">⬇ บันทึก CSV</button>
+        <button class="btn" id="btnPrint">🖨 พิมพ์ผล</button>
+        <button class="btn danger" id="btnClearScores">ล้างคะแนนทั้งหมด</button>
+        <button class="btn danger" id="btnClearAll">ล้างข้อมูลทั้งหมด</button>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin-top:12px"><table id="board"></table></div>
+    <p class="hint no-print" style="margin-bottom:0">เกณฑ์เสมอ: คะแนนรวม → คะแนนจากข้อ Hard (ข้อ 8–10) → จำนวนข้อที่ตอบถูก • คะแนนพื้นฐานรวม 100 คะแนน</p>
+  </div>
+</section>
+</main>
+</div>
+
+<!-- ===================== หน้าจอฉายโจทย์ ===================== -->
+<div id="projector" class="proj">
+  <div class="p-wait" id="pWait">รอการเชื่อมต่อจากหน้าจอกรรมการ…<br>(เปิดไฟล์นี้ในหน้าต่างหลักก่อน แล้วกด “เปิดหน้าจอฉาย”)</div>
+  <div class="proj-head"><span>SARASAS MATH GENIUS 2026</span><span id="pMeta"></span></div>
+  <div class="proj-body">
+    <div class="p-nums" id="pNums"><div class="p-tile"></div><div class="p-tile"></div><div class="p-tile"></div><div class="p-tile"></div></div>
+    <div class="p-target"><div class="p-target-label">TARGET</div><div class="p-target-num" id="pTarget">--</div></div>
+    <div class="p-timer" id="pTimer"><span id="pTime">00:00</span></div>
+  </div>
+  <div class="p-ctrl">
+    <span class="p-sound" id="pSound">🔊 คลิกที่หน้าจอ 1 ครั้งเพื่อเปิดเสียง</span>
+    <button id="pFs" title="เต็มจอ (F)">⛶ เต็มจอ</button>
+    <button id="pClose" class="p-close" title="ปิด Projector Mode (Esc)">✕ ปิด</button>
+  </div>
+</div>
+
+<!-- dialogs -->
+<dialog id="dlgConfirm">
+  <form method="dialog">
+    <p id="dlgMsg"></p>
+    <div class="actions"><button class="btn" value="no">ยกเลิก</button><button class="btn gold" value="yes" id="dlgYes">ยืนยัน</button></div>
+  </form>
+</dialog>
+<dialog id="dlgEdit">
+  <form id="editForm">
+    <h2 style="margin:0 0 12px;color:var(--gold)">✏️ แก้ไขทีม / คะแนน</h2>
+    <div class="edit-grid">
+      <input type="text" id="edName" placeholder="ชื่อทีม *" maxlength="60">
+      <input type="text" id="edM1" placeholder="สมาชิกคนที่ 1" maxlength="60">
+      <input type="text" id="edM2" placeholder="สมาชิกคนที่ 2" maxlength="60">
+    </div>
+    <div id="edQs" style="margin-top:12px;max-height:50vh;overflow:auto;padding-right:6px"></div>
+    <p class="hint" style="margin:12px 0 0">คะแนนคำนวณอัตโนมัติจากผลถูก/ผิดและ Bonus ×2 (ใช้ได้ไม่เกิน 2 ครั้งต่อทีม)</p>
+    <div class="actions"><button type="button" class="btn" id="edCancel">ยกเลิก</button><button type="submit" class="btn gold">บันทึก</button></div>
+  </form>
+</dialog>
+<div id="toast"></div>
+
+<script>
+'use strict';
+/*CORE_START*/
+/* ======================= CORE: ตัวสร้างโจทย์ / ตัวแก้ / ตัวตรวจ (ไม่แตะ DOM) ======================= */
+const TOTAL=10;
+const LV=[
+  {key:'EASY',   th:'ง่าย',     pts:5,  sec:45, color:'#34d399'},
+  {key:'MEDIUM', th:'ปานกลาง', pts:10, sec:60, color:'#4aa8ff'},
+  {key:'HARD',   th:'ยาก',      pts:15, sec:90, color:'#ff5c6c'}
+];
+const levelIndexOf=i=>i<3?0:(i<7?1:2);
+const lvOf=i=>LV[levelIndexOf(i)];
+
+/* เศษส่วนจำนวนเต็ม (คำนวณแม่นยำ ไม่มีค่าคลาดเคลื่อนจากทศนิยม) */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t;}return a;}
+function fr(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d)||1;return {n:n/g,d:d/g};}
+const F={
+  add:(a,b)=>fr(a.n*b.d+b.n*a.d,a.d*b.d),
+  sub:(a,b)=>fr(a.n*b.d-b.n*a.d,a.d*b.d),
+  mul:(a,b)=>fr(a.n*b.n,a.d*b.d),
+  div:(a,b)=>b.n===0?null:fr(a.n*b.d,a.d*b.n)   // ป้องกันหารด้วยศูนย์
+};
+const showFr=v=>v.d===1?String(v.n):(v.n+'/'+v.d+' (≈ '+(v.n/v.d).toFixed(4)+')');
+
+/* รวมสองนิพจน์ด้วยทั้ง 6 รูปแบบ (a+b, a×b, a−b, b−a, a÷b, b÷a) พร้อมวงเล็บขั้นต่ำ
+   p = ลำดับความสำคัญ: 3=ตัวเลข, 2=×÷, 1=+−   c = ทุกขั้นเป็นจำนวนเต็มไม่ติดลบ */
+function combine(a,b){
+  const out=[];
+  const wrap=(it,need)=>it.p<need?'('+it.s+')':it.s;
+  const mk=(v,s,p)=>({v,s,p,c:a.c&&b.c&&v.d===1&&v.n>=0});
+  const [x,y]=a.s<=b.s?[a,b]:[b,a];
+  out.push(mk(F.add(a.v,b.v), x.s+' + '+y.s, 1));
+  out.push(mk(F.mul(a.v,b.v), wrap(x,2)+' × '+wrap(y,2), 2));
+  out.push(mk(F.sub(a.v,b.v), a.s+' − '+wrap(b,2), 1));
+  out.push(mk(F.sub(b.v,a.v), b.s+' − '+wrap(a,2), 1));
+  if(b.v.n!==0) out.push(mk(F.div(a.v,b.v), wrap(a,2)+' ÷ '+wrap(b,3), 2));
+  if(a.v.n!==0) out.push(mk(F.div(b.v,a.v), wrap(b,2)+' ÷ '+wrap(a,3), 2));
+  return out;
+}
+
+/* คำนวณทุกความเป็นไปได้ → Map(target 10..99 → Map(นิพจน์ → มีวิธีที่ทุกขั้นเป็นจำนวนเต็มไม่ติดลบหรือไม่)) */
+function solveAll(nums){
+  const res=new Map();
+  const items=nums.map(n=>({v:fr(n,1),s:String(n),p:3,c:true}));
+  (function rec(list){
+    if(list.length===1){
+      const it=list[0];
+      if(it.v.d===1&&it.v.n>=10&&it.v.n<=99){
+        let m=res.get(it.v.n); if(!m){m=new Map();res.set(it.v.n,m);}
+        m.set(it.s,(m.get(it.s)||false)||it.c);
+      }
+      return;
+    }
+    for(let i=0;i<list.length;i++)for(let j=i+1;j<list.length;j++){
+      const rest=list.filter((_,k)=>k!==i&&k!==j);
+      for(const c of combine(list[i],list[j])) rec(rest.concat([c]));
+    }
+  })(items);
+  return res;
+}
+
+/* ตัวตรวจนิพจน์: ใช้เลข 1–9 หลักเดียว, + − × ÷ ( ) เท่านั้น, ใช้ครบทุกตัวครั้งเดียว */
+function checkAnswer(src,nums,target){
+  const fail=msg=>({ok:false,msg});
+  const raw=String(src==null?'':src).trim();
+  if(!raw) return fail('กรุณาใส่นิพจน์ที่ต้องการตรวจ');
+  const s=raw.replace(/\s+/g,'').replace(/[−–—]/g,'-').replace(/[×xX·]/g,'*').replace(/[÷:]/g,'/');
+  const toks=[];
+  for(let i=0;i<s.length;){
+    const ch=s[i];
+    if(ch>='0'&&ch<='9'){
+      let j=i; while(j<s.length&&s[j]>='0'&&s[j]<='9')j++;
+      const t=s.slice(i,j);
+      if(t.length>1) return fail('ห้ามต่อเลขเป็นเลขหลายหลัก ('+t+')');
+      if(t==='0') return fail('ในโจทย์ไม่มีเลข 0');
+      toks.push({t:'n',v:+t}); i=j;
+    } else if('+-*/()'.indexOf(ch)>=0){ toks.push({t:ch}); i++; }
+    else return fail('พบอักขระที่ไม่อนุญาต: '+ch);
+  }
+  let p=0,err=null; const used=[];
+  function expr(){
+    let a=term(); if(err) return null;
+    while(toks[p]&&(toks[p].t==='+'||toks[p].t==='-')){
+      const op=toks[p++].t; const b=term(); if(err) return null;
+      a=op==='+'?F.add(a,b):F.sub(a,b);
+    }
+    return a;
+  }
+  function term(){
+    let a=factor(); if(err) return null;
+    while(toks[p]&&(toks[p].t==='*'||toks[p].t==='/')){
+      const op=toks[p++].t; const b=factor(); if(err) return null;
+      if(op==='*') a=F.mul(a,b);
+      else{ if(b.n===0){err='ห้ามหารด้วยศูนย์';return null;} a=F.div(a,b); }
+    }
+    return a;
+  }
+  function factor(){
+    const k=toks[p];
+    if(!k){err='นิพจน์ไม่สมบูรณ์';return null;}
+    if(k.t==='n'){p++;used.push(k.v);return fr(k.v,1);}
+    if(k.t==='('){
+      p++; const a=expr(); if(err) return null;
+      if(!toks[p]||toks[p].t!==')'){err='วงเล็บไม่ครบคู่';return null;}
+      p++; return a;
+    }
+    if(k.t==='-'){err='ไม่อนุญาตให้ใช้เครื่องหมายลบนำหน้าตัวเลข';return null;}
+    err='รูปแบบนิพจน์ไม่ถูกต้อง (ตรวจเครื่องหมายระหว่างตัวเลข)';return null;
+  }
+  const v=expr();
+  if(err) return fail(err);
+  if(p<toks.length) return fail('รูปแบบนิพจน์ไม่ถูกต้อง (มีวงเล็บเกิน หรือขาดเครื่องหมายระหว่างตัวเลข)');
+  const a=used.slice().sort((x,y)=>x-y).join(','), b=nums.slice().sort((x,y)=>x-y).join(',');
+  if(a!==b) return {ok:false,msg:'ต้องใช้เลข '+nums.join(', ')+' ครบทุกตัว ตัวละ 1 ครั้ง (นิพจน์นี้ใช้: '+used.join(', ')+')',value:v};
+  const val=v.n/v.d;
+  if(!(Math.abs(val-target)<1e-9)) return {ok:false,msg:'ค่าที่ได้ = '+showFr(v)+' ไม่เท่ากับ Target '+target,value:v};
+  return {ok:true,msg:'ถูกต้อง ✓ ได้ '+target+' และใช้เลขครบทุกตัวครั้งเดียว',value:v};
+}
+
+/* สุ่มโจทย์ตามระดับ — ตรวจว่ามีคำตอบจริงก่อนเสมอ และพยายามเลือก Target ที่มีหลายวิธี */
+function makeQuestion(level,usedKeys){
+  usedKeys=usedKeys||new Set();
+  const range=[[5,999],[3,8],[2,4]][level];
+  const rule=tier=>e=>{
+    if(tier===0) return e.clean&&e.count>=range[0]&&e.count<=range[1];
+    if(tier===1) return e.clean&&e.count>=2;
+    if(tier===2) return e.count>=2;
+    return e.count>=1;
+  };
+  for(let att=0;att<3000;att++){
+    const tier=att<200?0:att<500?1:att<1000?2:3;
+    const nums=[0,0,0,0].map(()=>1+Math.floor(Math.random()*9));
+    const sortedKey=nums.slice().sort((a,b)=>a-b).join('');
+    const res=solveAll(nums);
+    const entries=[];
+    for(const [t,m] of res){
+      let clean=false; for(const v of m.values()) if(v){clean=true;break;}
+      entries.push({t,count:m.size,clean,m});
+    }
+    const ok=entries.filter(e=>rule(tier)(e)&&!usedKeys.has(sortedKey+'|'+e.t));
+    if(!ok.length) continue;
+    const e=ok[Math.floor(Math.random()*ok.length)];
+    const sols=[...e.m.entries()]
+      .sort((a,b)=>(b[1]-a[1])||(a[0].length-b[0].length)||(a[0]<b[0]?-1:1))
+      .map(x=>x[0])
+      .filter(s=>checkAnswer(s,nums,e.t).ok);          // ยืนยันทุกเฉลยด้วยตัวตรวจอิสระ
+    if(!sols.length) continue;
+    return {nums,target:e.t,count:e.m.size,solutions:sols.slice(0,6),key:sortedKey+'|'+e.t};
+  }
+  throw new Error('สร้างโจทย์ไม่สำเร็จ');
+}
+/*CORE_END*/
+
+/* ======================= UI ======================= */
+const KEY='smg2026_state_v1';
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isProj=/[?&]view=projector/.test(location.search)||location.hash==='#projector';
+
+let S=null;            // สถานะทั้งหมด (บันทึกใน localStorage)
+let showAns=false;     // เฉลย: เก็บเฉพาะหน้าจอกรรมการ ไม่ถูกส่งไปหน้าจอฉาย
+let curTab='control';
+let editingId=null;
+let bc=null; try{bc=new BroadcastChannel('smg2026');}catch(e){}
+
+const idleTimer=i=>({status:'idle',remainingMs:lvOf(i).sec*1000,endAt:0,runId:0});
+const defaults={projMeta:false,projHide:false,soundAdmin:true,soundProj:false};
+
+function freshState(){
+  const qs=[],used=new Set();
+  for(let i=0;i<TOTAL;i++){const q=makeQuestion(levelIndexOf(i),used);used.add(q.key);qs.push(q);}
+  return {v:1,questions:qs,idx:0,teams:[],timer:idleTimer(0),settings:Object.assign({},defaults),updated:0};
+}
+function loadState(){
+  try{
+    const r=localStorage.getItem(KEY); if(!r) return null;
+    const o=JSON.parse(r);
+    if(!o||o.v!==1||!Array.isArray(o.questions)||o.questions.length!==TOTAL) return null;
+    for(const q of o.questions) if(!q||!Array.isArray(q.nums)||q.nums.length!==4||typeof q.target!=='number'||!Array.isArray(q.solutions)||!q.solutions.length) return null;
+    o.settings=Object.assign({},defaults,o.settings||{});
+    o.teams=(o.teams||[]).map(t=>({id:String(t.id),name:t.name||'',m1:t.m1||'',m2:t.m2||'',
+      res:Array.from({length:TOTAL},(_,i)=>t.res&&(t.res[i]==='c'||t.res[i]==='w')?t.res[i]:null),
+      bonus:Array.from({length:TOTAL},(_,i)=>!!(t.bonus&&t.bonus[i]))}));
+    if(!(o.idx>=0&&o.idx<TOTAL)) o.idx=0;
+    if(!o.timer||!o.timer.status) o.timer=idleTimer(o.idx);
+    return o;
+  }catch(e){return null;}
+}
+function saveState(){
+  S.updated=Date.now();
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast('⚠ บันทึกข้อมูลลงเบราว์เซอร์ไม่สำเร็จ');}
+  try{bc&&bc.postMessage('sync');}catch(e){}
+}
+
+/* ---------- toast / confirm ---------- */
+let toastT=null;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2800);}
+function askConfirm(msg,yes){
+  return new Promise(res=>{
+    const d=$('#dlgConfirm'); $('#dlgMsg').textContent=msg; $('#dlgYes').textContent=yes||'ยืนยัน';
+    d.returnValue='no';
+    d.addEventListener('close',()=>res(d.returnValue==='yes'),{once:true});
+    d.showModal();
+  });
+}
+
+/* ---------- เสียง ---------- */
+let actx=null;
+function unlockAudio(){
+  try{
+    if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended') actx.resume();
+    $('#pSound').style.display='none';
+  }catch(e){}
+}
+function playAlarm(){
+  if(!actx) return;
+  try{
+    const t0=actx.currentTime+0.05;
+    const beep=(t,f,d)=>{const o=actx.createOscillator(),g=actx.createGain();o.type='square';o.frequency.value=f;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.35,t+.02);g.gain.setValueAtTime(.35,t+d-.04);g.gain.linearRampToValueAtTime(0,t+d);
+      o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+d+.02);};
+    beep(t0,880,.3);beep(t0+.45,880,.3);beep(t0+.9,880,.3);beep(t0+1.4,660,1.1);
+  }catch(e){}
+}
+
+/* ---------- ตัวจับเวลา ---------- */
+function remaining(t){t=t||S.timer;return t.status==='running'?Math.max(0,t.endAt-Date.now()):Math.max(0,t.remainingMs||0);}
+function startTimer(){
+  if(S.timer.status!=='idle') return;
+  const rem=remaining(); if(rem<=0) return;
+  S.timer={status:'running',remainingMs:rem,endAt:Date.now()+rem,runId:Date.now()};
+  saveState();renderAll();
+}
+function pauseTimer(){
+  if(S.timer.status!=='running') return;
+  S.timer={status:'paused',remainingMs:remaining(),endAt:0,runId:S.timer.runId};
+  saveState();renderAll();
+}
+function resumeTimer(){
+  if(S.timer.status!=='paused') return;
+  const rem=remaining(); if(rem<=0) return;
+  S.timer={status:'running',remainingMs:rem,endAt:Date.now()+rem,runId:S.timer.runId};
+  saveState();renderAll();
+}
+async function resetTimer(){
+  if(S.timer.status==='idle') return;
+  if(S.timer.status==='running'||S.timer.status==='paused'){
+    if(!await askConfirm('รีเซ็ตเวลาข้อนี้กลับเป็น '+lvOf(S.idx).sec+' วินาที?')) return;
+  }
+  S.timer=idleTimer(S.idx);saveState();renderAll();
+}
+function toggleTimer(){
+  const s=S.timer.status;
+  if(s==='idle') startTimer(); else if(s==='running') pauseTimer(); else if(s==='paused') resumeTimer();
+}
+
+let playedKey='';
+function updateTimerUI(){
+  const t=S.timer, rem=remaining(t);
+  const up=t.status==='timeup'||(t.status==='running'&&rem<=0);
+  const secs=Math.ceil(rem/1000);
+  const txt=pad(Math.floor(secs/60))+':'+pad(secs%60);
+  const warn=t.status==='running'&&!up&&rem<=10000;
+  if(!isProj){
+    $('#tTime').textContent=up?'00:00':txt;
+    $('#tState').textContent=up?'⏰ TIME UP':t.status==='running'?'RUNNING':t.status==='paused'?'PAUSED':'READY';
+    $('#tBox').classList.toggle('warn',warn);$('#tBox').classList.toggle('up',up);
+  }
+  $('#pTime').textContent=up?'TIME UP':txt;
+  $('#pTimer').classList.toggle('warn',warn);$('#pTimer').classList.toggle('timeup',up);
+  if(isProj&&up){
+    const k=S.idx+':'+t.runId;
+    if(playedKey!==k){playedKey=k;if(S.settings.soundProj)playAlarm();}
+  }
+}
+let pollN=0;
+function tick(){
+  if(!S) {if(isProj&&++pollN%10===0)syncFromStorage();return;}
+  if(!isProj&&S.timer.status==='running'&&remaining()<=0){
+    S.timer={status:'timeup',remainingMs:0,endAt:0,runId:S.timer.runId};
+    saveState();
+    if(S.settings.soundAdmin)playAlarm();
+    renderAll();return;
+  }
+  updateTimerUI();
+  if(isProj&&++pollN%10===0){   // สำรอง: เผื่อ event ข้ามหน้าต่างพลาด
+    const o=loadState(); if(o&&o.updated!==S.updated){S=o;renderAll();}
+  }
+}
+function startTicker(fn){
+  try{
+    const blob=new Blob(['setInterval(function(){postMessage(0)},100)'],{type:'text/javascript'});
+    const w=new Worker(URL.createObjectURL(blob)); w.onmessage=fn; return;
+  }catch(e){}
+  setInterval(fn,100);
+}
+
+/* ---------- การเปลี่ยนข้อ ---------- */
+async function goTo(i){
+  if(i<0||i>=TOTAL||i===S.idx) return;
+  const st=S.timer.status;
+  if(st==='running'||st==='paused'){
+    if(!await askConfirm('กำลังจับเวลาข้อนี้อยู่\nต้องการเปลี่ยนไปข้อ '+pad(i+1)+' หรือไม่? (เวลาจะถูกรีเซ็ต)')) return;
+  }
+  S.idx=i;S.timer=idleTimer(i);showAns=false;saveState();renderAll();
+}
+async function newQuestion(){
+  const st=S.timer.status;
+  if(st==='running'||st==='paused'){toast('กำลังจับเวลา — กด RESET ก่อน จึงจะสุ่มโจทย์ใหม่ได้');return;}
+  const has=S.teams.some(t=>t.res[S.idx]!==null||t.bonus[S.idx]);
+  if(!await askConfirm('สุ่มโจทย์ข้อ '+pad(S.idx+1)+' ใหม่?'+(has?'\n(ข้อนี้มีการบันทึกคะแนนไว้แล้ว คะแนนจะไม่ถูกลบ)':''),'สุ่มใหม่')) return;
+  const used=new Set(S.questions.map(q=>q.key));
+  S.questions[S.idx]=makeQuestion(levelIndexOf(S.idx),used);
+  S.timer=idleTimer(S.idx);showAns=false;saveState();renderAll();toast('สุ่มโจทย์ข้อ '+pad(S.idx+1)+' ใหม่แล้ว');
+}
+async function newSet(){
+  const st=S.timer.status;
+  if(st==='running'||st==='paused'){toast('กำลังจับเวลา — กด RESET ก่อน');return;}
+  if(!await askConfirm('สุ่มชุดโจทย์ใหม่ทั้ง 10 ข้อ?\n(คะแนนและรายชื่อทีมที่บันทึกไว้จะไม่ถูกลบ)','สุ่มทั้งชุด')) return;
+  const f=freshState();S.questions=f.questions;S.idx=0;S.timer=idleTimer(0);showAns=false;saveState();renderAll();toast('สุ่มชุดโจทย์ใหม่เรียบร้อย');
+}
+
+/* ---------- คะแนน ---------- */
+function teamStats(t){
+  let total=0,hard=0,correct=0,bonusUsed=0;
+  for(let i=0;i<TOTAL;i++){
+    const m=t.bonus[i]?2:1; if(t.bonus[i])bonusUsed++;
+    if(t.res[i]==='c'){const p=lvOf(i).pts*m;total+=p;if(i>=7)hard+=p;correct++;}
+  }
+  return {total,hard,correct,bonusUsed};
+}
+const bonusCount=t=>t.bonus.filter(Boolean).length;
+function rankTeams(){
+  const arr=S.teams.map(t=>({t,st:teamStats(t)}));
+  arr.sort((a,b)=>b.st.total-a.st.total||b.st.hard-a.st.hard||b.st.correct-a.st.correct||a.t.name.localeCompare(b.t.name,'th'));
+  arr.forEach((r,i)=>{
+    const p=arr[i-1];
+    r.rank=(p&&p.st.total===r.st.total&&p.st.hard===r.st.hard&&p.st.correct===r.st.correct)?p.rank:i+1;
+  });
+  return arr;
+}
+function qCell(t,i){
+  const r=t.res[i],b=t.bonus[i],base=lvOf(i).pts;
+  if(r==='c') return {txt:String(base*(b?2:1)),cls:'ok',b};
+  if(r==='w') return {txt:'0',cls:'no',b};
+  if(b) return {txt:'—',cls:'pend',b};
+  return {txt:'·',cls:'none',b:false};
+}
+
+/* ---------- Render ---------- */
+function renderAll(){
+  if(!S){$('#pWait').style.display='flex';return;}
+  $('#pWait').style.display='none';
+  if(!isProj) renderAdmin();
+  renderProjector();
+  updateTimerUI();
+}
+function renderProjector(){
+  const q=S.questions[S.idx],lv=lvOf(S.idx);
+  const hide=S.settings.projHide&&S.timer.status==='idle';
+  const tiles=$$('#pNums .p-tile');
+  q.nums.forEach((n,i)=>tiles[i].textContent=hide?'?':n);
+  $('#pTarget').textContent=hide?'??':q.target;
+  $('#pMeta').textContent=S.settings.projMeta?('ข้อ '+pad(S.idx+1)+'/10  •  '+lv.key+'  •  '+lv.pts+' คะแนน'):'';
+  $('#pSound').style.display=(isProj&&S.settings.soundProj&&!actx)?'inline':'none';
+}
+function renderAdmin(){
+  const q=S.questions[S.idx],lv=lvOf(S.idx),st=S.timer.status;
+  $('#qNo').textContent=pad(S.idx+1);
+  const lb=$('#qLevel');lb.textContent=lv.key+' • '+lv.th;lb.style.setProperty('--c',lv.color);
+  $('#qPts').textContent=lv.pts+' คะแนน';
+  $('#qNums').innerHTML=q.nums.map(n=>'<div class="tile">'+n+'</div>').join('');
+  $('#qTarget').textContent=q.target;
+  $('#bStart').disabled=st!=='idle';
+  $('#bPause').disabled=st!=='running';
+  $('#bResume').disabled=st!=='paused';
+  $('#bReset').disabled=st==='idle';
+  $('#bPrev').disabled=S.idx===0;
+  $('#bNext').disabled=S.idx===TOTAL-1;
+  $('#bNew').disabled=st==='running'||st==='paused';
+  $('#bShow').disabled=showAns;$('#bHide').disabled=!showAns;
+  $('#progress').innerHTML=Array.from({length:TOTAL},(_,i)=>{
+    const l=lvOf(i),done=S.teams.some(t=>t.res[i]!==null);
+    return '<button class="seg'+(i===S.idx?' cur':'')+(done?' done':'')+'" data-go="'+i+'" style="--c:'+l.color+'" title="ข้อ '+(i+1)+' • '+l.key+' • '+l.pts+' คะแนน"><b>'+pad(i+1)+'</b><small>'+l.key+'</small></button>';
+  }).join('');
+  renderAnswer();
+  $('#setMeta').checked=S.settings.projMeta;$('#setHide').checked=S.settings.projHide;
+  $('#setSndA').checked=S.settings.soundAdmin;$('#setSndP').checked=S.settings.soundProj;
+  renderScores();
+}
+function renderAnswer(){
+  const box=$('#ansBody'),q=S.questions[S.idx];
+  if(!showAns){box.innerHTML='<div class="locked">🔒 เฉลยถูกซ่อนอยู่<br><small>กด SHOW ANSWER (หรือปุ่ม A) เพื่อเปิดดู — แสดงเฉพาะหน้าจอกรรมการ</small></div>';return;}
+  const items=q.solutions.map(s=>{const r=checkAnswer(s,q.nums,q.target);
+    return '<li class="'+(r.ok?'':'bad')+'"><code>'+esc(s)+' = '+q.target+'</code><span>'+(r.ok?'✓ ตรวจแล้ว':'✗ ไม่ผ่าน')+'</span></li>';}).join('');
+  box.innerHTML='<div class="ans-main"><div class="ans-label">วิธีแนะนำ (ทุกขั้นเป็นจำนวนเต็มไม่ติดลบ ถ้ามี)</div><div class="ans-big">'+esc(q.solutions[0])+' = '+q.target+'</div></div>'+
+    '<div class="ans-label">วิธีที่ตรวจสอบแล้ว (แสดง '+q.solutions.length+' จากประมาณ '+q.count+' รูปแบบที่พบ)</div><ul class="ans-list">'+items+'</ul>'+
+    '<div class="hint" style="margin-top:10px">เฉลยทุกบรรทัดถูกคำนวณซ้ำด้วยตัวตรวจอิสระ (เศษส่วนแม่นยำ + ค่าคลาดเคลื่อน 10⁻⁹)</div>';
+}
+function renderQuick(){
+  const i=S.idx,lv=lvOf(i),locked=S.timer.status!=='idle';
+  $('#quickTitle').textContent='ข้อ '+pad(i+1)+' • '+lv.key+' • '+lv.pts+' คะแนน';
+  if(!S.teams.length){$('#quick').innerHTML='<div class="empty">ยังไม่มีทีม — เพิ่มทีมด้านบนก่อน</div>';return;}
+  $('#quick').innerHTML=S.teams.map(t=>{
+    const r=t.res[i],b=t.bonus[i],used=bonusCount(t);
+    const lock=locked||r!==null||(!b&&used>=2);
+    const why=locked?'ล็อกแล้ว: เริ่มจับเวลาไปแล้ว':r!==null?'ล็อกแล้ว: บันทึกผลข้อนี้แล้ว (แก้ได้ที่ปุ่มแก้ไข)':(!b&&used>=2)?'ใช้ Bonus ครบ 2 ครั้งแล้ว':'ประกาศใช้ Bonus ×2 ข้อนี้';
+    const pv=r==='c'?lv.pts*(b?2:1):r==='w'?0:'—';
+    return '<div class="qrow"><div><div class="nm">'+esc(t.name)+'</div><div class="mem">Bonus ใช้แล้ว '+used+'/2</div></div>'+
+      '<label class="bon'+(lock?' lock':'')+'" title="'+why+'"><input type="checkbox" data-bonus="'+esc(t.id)+'" '+(b?'checked ':'')+(lock?'disabled':'')+'> ×2</label>'+
+      '<div><button class="rbtn ok'+(r==='c'?' on':'')+'" data-team="'+esc(t.id)+'" data-res="c">✓ ถูก</button><button class="rbtn no'+(r==='w'?' on':'')+'" data-team="'+esc(t.id)+'" data-res="w">✗ ผิด/ไม่ตอบ</button><button class="rbtn" data-team="'+esc(t.id)+'" data-res="n">ล้าง</button></div>'+
+      '<div class="pv">'+pv+(pv!=='—'?' คะแนน':'')+'</div></div>';
+  }).join('');
+}
+function renderScores(){
+  renderQuick();
+  const ranked=rankTeams();
+  const head='<thead><tr><th>#</th><th class="l">ทีม</th>'+Array.from({length:TOTAL},(_,i)=>'<th class="q" style="--c:'+lvOf(i).color+'">'+(i+1)+'</th>').join('')+'<th>รวม</th><th>Hard</th><th>ถูก</th><th>Bonus</th><th class="no-print"></th></tr></thead>';
+  let body;
+  if(!ranked.length) body='<tr><td colspan="'+(TOTAL+7)+'" class="empty">ยังไม่มีข้อมูลทีม</td></tr>';
+  else body=ranked.map(({t,st,rank})=>{
+    const cells=Array.from({length:TOTAL},(_,i)=>{const c=qCell(t,i);return '<td class="q '+c.cls+'">'+c.txt+(c.b?'<sup>×2</sup>':'')+'</td>';}).join('');
+    return '<tr class="'+(rank<=3?'r'+rank:'')+'"><td class="rk">'+rank+'</td><td class="l"><b>'+esc(t.name)+'</b><div class="mem">'+esc([t.m1,t.m2].filter(Boolean).join(' • '))+'</div></td>'+cells+
+      '<td class="tot">'+st.total+'</td><td>'+st.hard+'</td><td>'+st.correct+'</td><td>'+st.bonusUsed+'/2</td>'+
+      '<td class="no-print"><button class="mini" data-edit="'+esc(t.id)+'">✏️ แก้ไข</button><button class="mini dn" data-del="'+esc(t.id)+'">🗑</button></td></tr>';
+  }).join('');
+  $('#board').innerHTML=head+'<tbody>'+body+'</tbody>';
+}
+
+/* ---------- ทีม / คะแนน: การกระทำ ---------- */
+function addTeam(){
+  const name=$('#tName').value.trim();
+  if(!name){toast('กรุณากรอกชื่อทีม');$('#tName').focus();return;}
+  S.teams.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name,m1:$('#tM1').value.trim(),m2:$('#tM2').value.trim(),
+    res:Array(TOTAL).fill(null),bonus:Array(TOTAL).fill(false)});
+  ['#tName','#tM1','#tM2'].forEach(s=>$(s).value='');
+  saveState();renderAll();$('#tName').focus();toast('เพิ่มทีม “'+name+'” แล้ว');
+}
+function openEdit(id){
+  const t=S.teams.find(x=>x.id===id);if(!t)return;
+  editingId=id;
+  $('#edName').value=t.name;$('#edM1').value=t.m1;$('#edM2').value=t.m2;
+  $('#edQs').innerHTML=Array.from({length:TOTAL},(_,i)=>{
+    const l=lvOf(i);
+    return '<div class="edit-q"><b style="color:'+l.color+'">ข้อ '+pad(i+1)+' <small>'+l.pts+' คะแนน</small></b>'+
+      '<select id="edR'+i+'"><option value="">— ยังไม่บันทึก —</option><option value="c"'+(t.res[i]==='c'?' selected':'')+'>✓ ถูก</option><option value="w"'+(t.res[i]==='w'?' selected':'')+'>✗ ผิด / ไม่ตอบ</option></select>'+
+      '<label class="bon"><input type="checkbox" id="edB'+i+'"'+(t.bonus[i]?' checked':'')+'> Bonus ×2</label></div>';
+  }).join('');
+  $('#dlgEdit').showModal();
+}
+function saveEdit(e){
+  e.preventDefault();
+  const t=S.teams.find(x=>x.id===editingId);if(!t)return;
+  const name=$('#edName').value.trim();
+  if(!name){toast('กรุณากรอกชื่อทีม');return;}
+  const bonus=Array.from({length:TOTAL},(_,i)=>$('#edB'+i).checked);
+  if(bonus.filter(Boolean).length>2){toast('ใช้ Bonus ×2 ได้ไม่เกิน 2 ครั้งต่อทีม');return;}
+  t.name=name;t.m1=$('#edM1').value.trim();t.m2=$('#edM2').value.trim();
+  t.bonus=bonus;t.res=Array.from({length:TOTAL},(_,i)=>$('#edR'+i).value||null);
+  saveState();renderAll();$('#dlgEdit').close();toast('บันทึกการแก้ไขแล้ว');
+}
+function csvCell(v,text){
+  let s=String(v==null?'':v);
+  if(text&&/^[=+\-@]/.test(s)) s="'"+s;
+  return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+}
+function exportCSV(){
+  if(!S.teams.length){toast('ยังไม่มีข้อมูลทีมให้บันทึก');return;}
+  const head=['อันดับ','ชื่อทีม','สมาชิก 1','สมาชิก 2'];
+  for(let i=0;i<TOTAL;i++) head.push('ข้อ '+(i+1)+' ('+lvOf(i).key+')');
+  head.push('คะแนนรวม','คะแนน Hard','จำนวนข้อที่ถูก','Bonus x2 ที่ใช้','ข้อที่ใช้ Bonus');
+  const rows=rankTeams().map(({t,st,rank})=>{
+    const r=[rank,csvCell(t.name,1),csvCell(t.m1,1),csvCell(t.m2,1)];
+    for(let i=0;i<TOTAL;i++) r.push(t.res[i]==='c'?lvOf(i).pts*(t.bonus[i]?2:1):t.res[i]==='w'?0:'');
+    r.push(st.total,st.hard,st.correct,st.bonusUsed,t.bonus.map((b,i)=>b?i+1:null).filter(Boolean).join(' '));
+    return r;
+  });
+  const csv='\ufeff'+[head.map(h=>csvCell(h))].concat(rows).map(r=>r.join(',')).join('\r\n');
+  const d=new Date(),n=d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'_'+pad(d.getHours())+pad(d.getMinutes());
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='SpeedMath2026_'+n+'.csv';document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+  toast('บันทึกไฟล์ CSV แล้ว');
+}
+
+/* ---------- หน้าจอฉาย / เต็มจอ ---------- */
+function openProjWindow(){
+  const url=location.href.split('#')[0].split('?')[0]+'?view=projector';
+  const w=window.open(url,'smg2026_projector','width=1280,height=720');
+  if(!w){toast('เบราว์เซอร์บล็อกหน้าต่างใหม่ — กรุณาอนุญาต Pop-up แล้วลองอีกครั้ง');return;}
+  try{w.focus();}catch(e){}
+  toast('เปิดหน้าจอฉายแล้ว — ลากไปที่จอโปรเจกเตอร์แล้วกด F เพื่อเต็มจอ');
+}
+function openProjMode(){
+  document.body.classList.add('proj-overlay');renderProjector();updateTimerUI();
+  try{const p=document.documentElement.requestFullscreen();if(p&&p.catch)p.catch(()=>{});}catch(e){}
+}
+function closeProjMode(){
+  document.body.classList.remove('proj-overlay');
+  try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}
+}
+function toggleFs(){
+  try{
+    if(document.fullscreenElement) document.exitFullscreen();
+    else{const p=document.documentElement.requestFullscreen();if(p&&p.catch)p.catch(()=>{});}
+  }catch(e){}
+}
+function setTab(t){
+  curTab=t;
+  $$('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  $$('.tab').forEach(s=>s.classList.toggle('active',s.id==='tab-'+t));
+}
+function syncFromStorage(){const o=loadState();if(o){S=o;renderAll();}}
+
+/* ---------- เริ่มต้น + ผูกเหตุการณ์ ---------- */
+function init(){
+  S=loadState();
+  if(isProj){
+    document.body.classList.add('view-projector');
+    document.title='หน้าจอฉายโจทย์ — SPEED MATH 2026';
+    window.addEventListener('storage',e=>{if(e.key===KEY)syncFromStorage();});
+    if(bc)bc.onmessage=syncFromStorage;
+    if(S&&S.timer.status==='timeup')playedKey=S.idx+':'+S.timer.runId;
+    $('#pFs').onclick=toggleFs;
+    document.addEventListener('keydown',e=>{if(e.key==='f'||e.key==='F')toggleFs();});
+  }else{
+    if(!S){S=freshState();}
+    if(S.timer.status==='running'&&remaining()<=0) S.timer={status:'timeup',remainingMs:0,endAt:0,runId:S.timer.runId};
+    saveState();
+    bindAdmin();
+  }
+  document.addEventListener('pointerdown',unlockAudio);
+  document.addEventListener('keydown',unlockAudio);
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b)b.blur();});
+  let mt=null;
+  document.addEventListener('mousemove',()=>{document.body.classList.add('mouse');clearTimeout(mt);mt=setTimeout(()=>document.body.classList.remove('mouse'),2500);});
+  document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&document.body.classList.contains('proj-overlay'))closeProjMode();});
+  $('#pClose').onclick=closeProjMode;
+  renderAll();
+  startTicker(tick);
+}
+function bindAdmin(){
+  $$('.tabs button').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+  $('#btnOpenProj').onclick=openProjWindow;
+  $('#btnProjMode').onclick=openProjMode;
+  $('#pFs').onclick=toggleFs;
+  $('#bStart').onclick=startTimer;$('#bPause').onclick=pauseTimer;$('#bResume').onclick=resumeTimer;$('#bReset').onclick=resetTimer;
+  $('#bPrev').onclick=()=>goTo(S.idx-1);$('#bNext').onclick=()=>goTo(S.idx+1);
+  $('#bNew').onclick=newQuestion;
+  $('#bShow').onclick=()=>{showAns=true;renderAdmin();};
+  $('#bHide').onclick=()=>{showAns=false;renderAdmin();};
+  $('#bNewSet').onclick=newSet;
+  $('#bTestSnd').onclick=()=>{unlockAudio();playAlarm();};
+  $('#progress').onclick=e=>{const b=e.target.closest('[data-go]');if(b)goTo(+b.dataset.go);};
+  // ตั้งค่า
+  const setBind=(id,key)=>$(id).onchange=e=>{S.settings[key]=e.target.checked;saveState();renderAll();};
+  setBind('#setMeta','projMeta');setBind('#setHide','projHide');setBind('#setSndA','soundAdmin');setBind('#setSndP','soundProj');
+  // ตัวตรวจคำตอบ
+  const doCheck=()=>{
+    const q=S.questions[S.idx],r=checkAnswer($('#chkIn').value,q.nums,q.target),o=$('#chkOut');
+    o.className='chk-out '+(r.ok?'ok':'no');o.textContent=r.msg;
+  };
+  $('#chkBtn').onclick=doCheck;
+  $('#chkIn').onkeydown=e=>{if(e.key==='Enter')doCheck();};
+  $('#sym').onclick=e=>{
+    const b=e.target.closest('button');if(!b)return;
+    const inp=$('#chkIn');
+    if(b.textContent==='⌫')inp.value=inp.value.slice(0,-1);else inp.value+=b.textContent;
+    inp.focus();
+  };
+  // ทีม / คะแนน
+  $('#btnAddTeam').onclick=addTeam;
+  ['#tName','#tM1','#tM2'].forEach(s=>$(s).onkeydown=e=>{if(e.key==='Enter')addTeam();});
+  $('#quick').onclick=e=>{
+    const b=e.target.closest('[data-res]');if(!b)return;
+    const t=S.teams.find(x=>x.id===b.dataset.team);if(!t)return;
+    t.res[S.idx]=b.dataset.res==='n'?null:b.dataset.res;
+    saveState();renderAll();
+  };
+  $('#quick').onchange=e=>{
+    const c=e.target.closest('[data-bonus]');if(!c)return;
+    const t=S.teams.find(x=>x.id===c.dataset.bonus);if(!t)return;
+    if(c.checked&&bonusCount(t)>=2){c.checked=false;toast('ทีมนี้ใช้ Bonus ×2 ครบ 2 ครั้งแล้ว');return;}
+    t.bonus[S.idx]=c.checked;saveState();renderAll();
+  };
+  $('#board').onclick=async e=>{
+    const ed=e.target.closest('[data-edit]');if(ed){openEdit(ed.dataset.edit);return;}
+    const dl=e.target.closest('[data-del]');
+    if(dl){
+      const t=S.teams.find(x=>x.id===dl.dataset.del);if(!t)return;
+      if(await askConfirm('ลบทีม “'+t.name+'” และคะแนนทั้งหมดของทีมนี้?','ลบทีม')){S.teams=S.teams.filter(x=>x!==t);saveState();renderAll();}
+    }
+  };
+  $('#editForm').onsubmit=saveEdit;
+  $('#edCancel').onclick=()=>$('#dlgEdit').close();
+  $('#btnCsv').onclick=exportCSV;
+  $('#btnPrint').onclick=()=>{
+    if(!S.teams.length){toast('ยังไม่มีข้อมูลทีมให้พิมพ์');return;}
+    setTab('scores');$('#printDate').textContent='พิมพ์เมื่อ '+new Date().toLocaleString('th-TH');
+    setTimeout(()=>window.print(),100);
+  };
+  $('#btnClearScores').onclick=async()=>{
+    if(!S.teams.length){toast('ยังไม่มีข้อมูล');return;}
+    if(await askConfirm('ล้างคะแนนและ Bonus ของทุกทีมทั้งหมด?\n(รายชื่อทีมยังคงอยู่)','ล้างคะแนน')){
+      S.teams.forEach(t=>{t.res=Array(TOTAL).fill(null);t.bonus=Array(TOTAL).fill(false);});
+      saveState();renderAll();toast('ล้างคะแนนทั้งหมดแล้ว');
+    }
+  };
+  $('#btnClearAll').onclick=async()=>{
+    if(!S.teams.length){toast('ยังไม่มีข้อมูล');return;}
+    if(await askConfirm('ล้างข้อมูลทีมและคะแนนทั้งหมด?\nไม่สามารถกู้คืนได้ (แนะนำให้บันทึก CSV ก่อน)','ล้างทั้งหมด')){
+      S.teams=[];saveState();renderAll();toast('ล้างข้อมูลทั้งหมดแล้ว');
+    }
+  };
+  // คีย์ลัด
+  document.addEventListener('keydown',e=>{
+    const ov=document.body.classList.contains('proj-overlay');
+    if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||document.querySelector('dialog[open]'))return;
+    if(e.ctrlKey||e.metaKey||e.altKey)return;
+    if(e.key==='Escape'&&ov){closeProjMode();return;}
+    if(curTab!=='control'&&!ov)return;
+    if(e.code==='Space'){e.preventDefault();toggleTimer();}
+    else if(e.key==='ArrowRight'){goTo(S.idx+1);}
+    else if(e.key==='ArrowLeft'){goTo(S.idx-1);}
+    else if((e.key==='a'||e.key==='A')&&!ov){showAns=!showAns;renderAdmin();}
+  });
+}
+init();
+</script>
+</body>
+</html>
